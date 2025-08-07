@@ -1,0 +1,179 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  * {
+    @apply border-dark-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-dark-bg font-sans text-dark-text;
+    font-feature-settings:
+      'rlig' 1,
+      'calt' 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-white;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-bg;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded bg-dark-border;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-dark-muted;
+  }
+
+  /* Selection */
+  ::selection {
+    @apply bg-primary-500/20 text-white;
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary-500 ring-offset-2 ring-offset-dark-bg;
+  }
+
+  /* Link styles */
+  a {
+    @apply text-primary-500 transition-colors duration-200 hover:text-primary-400;
+  }
+
+  /* Code highlighting overrides */
+  pre[class*='language-'] {
+    @apply border border-dark-border bg-dark-card;
+  }
+
+  code[class*='language-'] {
+    @apply text-dark-text;
+  }
+
+  .token.comment {
+    @apply italic text-dark-muted;
+  }
+
+  .token.string {
+    @apply text-primary-400;
+  }
+
+  .token.keyword {
+    @apply text-blue-400;
+  }
+
+  .token.function {
+    @apply text-green-400;
+  }
+
+  .token.number {
+    @apply text-orange-400;
+  }
+
+  .token.operator {
+    @apply text-white;
+  }
+}
+
+@layer components {
+  .container {
+    @apply mx-auto max-w-4xl px-6 sm:px-8;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500;
+  }
+
+  .btn-secondary {
+    @apply btn border border-dark-border bg-dark-card text-dark-text hover:bg-dark-border;
+  }
+
+  .btn-ghost {
+    @apply btn text-dark-text hover:bg-dark-card;
+  }
+
+  .input {
+    @apply block w-full rounded-md border border-dark-border bg-dark-card px-3 py-2 text-dark-text placeholder-dark-muted focus:border-primary-500 focus:ring-primary-500;
+  }
+
+  .card {
+    @apply rounded-lg border border-dark-border bg-dark-card;
+  }
+
+  .essay-content {
+    @apply prose prose-lg max-w-none;
+  }
+
+  /* Newsletter signup styling */
+  .newsletter-form {
+    @apply space-y-4;
+  }
+
+  .newsletter-input {
+    @apply input;
+  }
+
+  .newsletter-button {
+    @apply btn-primary w-full sm:w-auto;
+  }
+
+  /* Responsive text sizes */
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .mask-gradient {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      black 20%,
+      black 80%,
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      black 20%,
+      black 80%,
+      transparent
+    );
+  }
+}
