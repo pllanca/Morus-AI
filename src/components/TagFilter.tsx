@@ -1,20 +1,23 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import { useTranslations, Locale } from '@/lib/translations'
 
 interface TagFilterProps {
   tags: string[]
   selectedTag: string | null
   onTagSelect: (tag: string | null) => void
+  locale?: Locale
 }
 
-export function TagFilter({ tags, selectedTag, onTagSelect }: TagFilterProps) {
+export function TagFilter({ tags, selectedTag, onTagSelect, locale = 'en' }: TagFilterProps) {
+  const t = useTranslations(locale)
   if (tags.length === 0) return null
 
   return (
     <div className="mb-8">
       <h3 className="mb-4 text-sm font-medium text-dark-text">
-        Filter by topic:
+        {t.essays.filterByTopic}
       </h3>
       <div className="flex flex-wrap gap-2">
         <button
@@ -26,7 +29,7 @@ export function TagFilter({ tags, selectedTag, onTagSelect }: TagFilterProps) {
               : 'border-dark-border bg-dark-card text-dark-text hover:border-primary-500 hover:text-primary-500'
           )}
         >
-          All essays
+          {t.essays.allEssays}
         </button>
         {tags.map((tag) => (
           <button

@@ -1,8 +1,16 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { siteConfig } from '@/lib/config'
+import { useTranslations, Locale } from '@/lib/translations'
 import { NewsletterSignup } from './NewsletterSignup'
 
 export function Footer() {
+  const pathname = usePathname()
+  const locale = pathname.startsWith('/es') ? 'es' : 'en'
+  const t = useTranslations(locale as Locale)
+  
   const currentYear = new Date().getFullYear()
   const socialLinks = Object.entries(siteConfig.social).filter(([, url]) => url)
 
@@ -13,12 +21,12 @@ export function Footer() {
         <div className="mb-12">
           <div className="mx-auto max-w-md text-center">
             <h3 className="mb-3 text-xl font-semibold text-white">
-              Stay Updated
+              {t.newsletter.stayUpdated}
             </h3>
             <p className="mb-6 text-dark-text">
-              Get notified when I publish new essays. No spam, ever.
+              {t.newsletter.stayUpdatedText}
             </p>
-            <NewsletterSignup />
+            <NewsletterSignup locale={locale} />
           </div>
         </div>
 
@@ -26,16 +34,16 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
           <div className="flex items-center space-x-8">
             <Link
-              href="/essays"
+              href={locale === 'es' ? '/es/essays' : '/essays'}
               className="text-sm text-dark-text hover:text-primary-500"
             >
-              All Essays
+              {t.footer.allEssays}
             </Link>
             <Link
-              href="/about"
+              href={locale === 'es' ? '/es/about' : '/about'}
               className="text-sm text-dark-text hover:text-primary-500"
             >
-              About
+              {t.footer.about}
             </Link>
           </div>
 
@@ -49,7 +57,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="text-sm capitalize text-dark-text hover:text-primary-500"
                 >
-                  {platform === 'email' ? 'Contact' : platform}
+                  {platform === 'email' ? t.footer.contact : platform}
                 </a>
               ))}
             </div>
@@ -58,7 +66,7 @@ export function Footer() {
 
         <div className="mt-8 border-t border-dark-border pt-8 text-center">
           <p className="text-sm text-dark-muted">
-            &copy; {currentYear} {siteConfig.author}. All rights reserved.
+            &copy; {currentYear} {siteConfig.author}. {t.footer.allRightsReserved}
           </p>
         </div>
       </div>

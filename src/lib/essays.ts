@@ -4,11 +4,15 @@ import matter from 'gray-matter'
 import readingTime from 'reading-time'
 import { format } from 'date-fns'
 import type { Essay, EssayWithoutContent, EssayFrontmatter } from '@/types/essay'
+import type { Locale } from './translations'
 
-const essaysDirectory = path.join(process.cwd(), 'content/essays')
+function getEssaysDirectory(locale: Locale = 'en'): string {
+  return path.join(process.cwd(), `content/essays${locale === 'es' ? '-es' : ''}`)
+}
 
-export async function getAllEssays(): Promise<EssayWithoutContent[]> {
+export async function getAllEssays(locale: Locale = 'en'): Promise<EssayWithoutContent[]> {
   try {
+    const essaysDirectory = getEssaysDirectory(locale)
     if (!fs.existsSync(essaysDirectory)) {
       return []
     }
@@ -61,8 +65,9 @@ export async function getAllEssays(): Promise<EssayWithoutContent[]> {
   }
 }
 
-export async function getEssayBySlug(slug: string): Promise<Essay | null> {
+export async function getEssayBySlug(slug: string, locale: Locale = 'en'): Promise<Essay | null> {
   try {
+    const essaysDirectory = getEssaysDirectory(locale)
     const fullPath = path.join(essaysDirectory, `${slug}.mdx`)
     
     if (!fs.existsSync(fullPath)) {
@@ -101,20 +106,20 @@ export async function getEssayBySlug(slug: string): Promise<Essay | null> {
   }
 }
 
-export async function getFeaturedEssays(): Promise<EssayWithoutContent[]> {
-  const allEssays = await getAllEssays()
+export async function getFeaturedEssays(locale: Locale = 'en'): Promise<EssayWithoutContent[]> {
+  const allEssays = await getAllEssays(locale)
   return allEssays.filter(essay => essay.frontmatter.featured).slice(0, 3)
 }
 
-export async function getEssaysByTag(tag: string): Promise<EssayWithoutContent[]> {
-  const allEssays = await getAllEssays()
+export async function getEssaysByTag(tag: string, locale: Locale = 'en'): Promise<EssayWithoutContent[]> {
+  const allEssays = await getAllEssays(locale)
   return allEssays.filter(essay => 
     essay.frontmatter.tags.some(t => t.toLowerCase() === tag.toLowerCase())
   )
 }
 
-export async function getAllTags(): Promise<string[]> {
-  const allEssays = await getAllEssays()
+export async function getAllTags(locale: Locale = 'en'): Promise<string[]> {
+  const allEssays = await getAllEssays(locale)
   const tags = new Set<string>()
   
   allEssays.forEach(essay => {
@@ -124,8 +129,9 @@ export async function getAllTags(): Promise<string[]> {
   return Array.from(tags).sort()
 }
 
-export async function getEssaySlugs(): Promise<string[]> {
+export async function getEssaySlugs(locale: Locale = 'en'): Promise<string[]> {
   try {
+    const essaysDirectory = getEssaysDirectory(locale)
     if (!fs.existsSync(essaysDirectory)) {
       return []
     }

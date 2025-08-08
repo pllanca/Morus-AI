@@ -2,18 +2,26 @@
 
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { useTranslations, Locale } from '@/lib/translations'
 
 interface NewsletterSignupProps {
   className?: string
   placeholder?: string
   buttonText?: string
+  locale?: Locale
 }
 
 export function NewsletterSignup({
   className,
-  placeholder = 'Enter your email',
-  buttonText = 'Subscribe',
+  placeholder,
+  buttonText,
+  locale = 'en',
 }: NewsletterSignupProps) {
+  const t = useTranslations(locale)
+  
+  // Use translations as defaults if no props provided
+  const finalPlaceholder = placeholder || t.newsletter.placeholder
+  const finalButtonText = buttonText || t.newsletter.subscribe
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
@@ -25,7 +33,7 @@ export function NewsletterSignup({
 
     if (!email || !email.includes('@')) {
       setStatus('error')
-      setMessage('Please enter a valid email address')
+      setMessage(t.newsletter.invalidEmail)
       return
     }
 
@@ -44,15 +52,15 @@ export function NewsletterSignup({
 
       if (response.ok) {
         setStatus('success')
-        setMessage('Thanks for subscribing!')
+        setMessage(t.newsletter.successMessage)
         setEmail('')
       } else {
         setStatus('error')
-        setMessage(data.message || 'Something went wrong. Please try again.')
+        setMessage(data.message || t.newsletter.genericError)
       }
     } catch (error) {
       setStatus('error')
-      setMessage('Network error. Please try again.')
+      setMessage(t.newsletter.networkError)
     }
   }
 
@@ -66,7 +74,7 @@ export function NewsletterSignup({
       >
         <p className="font-medium text-primary-400">{message}</p>
         <p className="mt-2 text-sm text-dark-muted">
-          Check your email to confirm your subscription.
+          {t.newsletter.confirmEmail}
         </p>
       </div>
     )
@@ -78,7 +86,7 @@ export function NewsletterSignup({
         <div className="flex flex-col gap-3 sm:flex-row">
           <input
             type="email"
-            placeholder={placeholder}
+            placeholder={finalPlaceholder}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="newsletter-input flex-1"
@@ -93,7 +101,7 @@ export function NewsletterSignup({
               status === 'loading' && 'cursor-not-allowed opacity-75'
             )}
           >
-            {status === 'loading' ? 'Subscribing...' : buttonText}
+            {status === 'loading' ? t.newsletter.subscribing : finalButtonText}
           </button>
         </div>
 
@@ -102,7 +110,7 @@ export function NewsletterSignup({
         )}
 
         <p className="mt-2 text-xs text-dark-muted">
-          No spam, unsubscribe anytime.
+          {t.newsletter.noSpam}
         </p>
       </form>
     </div>

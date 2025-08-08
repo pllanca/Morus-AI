@@ -1,8 +1,8 @@
 import type { SiteConfig } from '@/types/essay'
 
 export const siteConfig: SiteConfig = {
-  name: process.env.SITE_NAME || 'Personal Essays',
-  author: process.env.AUTHOR_NAME || 'Your Name',
+  name: process.env.SITE_NAME || 'Pedro LLanca',
+  author: process.env.AUTHOR_NAME || 'Pedro LLanca',
   description: 'Exploring ideas through thoughtful essays and personal reflections.',
   url: process.env.SITE_URL || 'https://your-domain.com',
   social: {

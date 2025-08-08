@@ -2,15 +2,18 @@
 
 import { useState } from 'react'
 import { siteConfig } from '@/lib/config'
+import { useTranslations, Locale } from '@/lib/translations'
 
 interface SocialShareProps {
   title: string
   url: string
   description?: string
+  locale?: Locale
 }
 
-export function SocialShare({ title, url, description }: SocialShareProps) {
+export function SocialShare({ title, url, description, locale = 'en' }: SocialShareProps) {
   const [copied, setCopied] = useState(false)
+  const t = useTranslations(locale)
 
   const encodedTitle = encodeURIComponent(title)
   const encodedUrl = encodeURIComponent(url)
@@ -46,7 +49,7 @@ export function SocialShare({ title, url, description }: SocialShareProps) {
 
   return (
     <div className="flex items-center gap-4 py-4">
-      <span className="text-sm text-dark-muted">Share:</span>
+      <span className="text-sm text-dark-muted">{t.essayDetail.share}</span>
 
       <div className="flex items-center gap-2">
         {shareLinks.map((link) => (

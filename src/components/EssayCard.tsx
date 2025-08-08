@@ -1,16 +1,18 @@
 import Link from 'next/link'
 import { format } from 'date-fns'
 import type { EssayWithoutContent } from '@/types/essay'
+import type { Locale } from '@/lib/translations'
 
 interface EssayCardProps {
   essay: EssayWithoutContent
   featured?: boolean
+  locale?: Locale
 }
 
-export function EssayCard({ essay, featured = false }: EssayCardProps) {
+export function EssayCard({ essay, featured = false, locale = 'en' }: EssayCardProps) {
   return (
     <article className={`group ${featured ? 'mb-8' : 'mb-6'}`}>
-      <Link href={`/essays/${essay.slug}`} className="block">
+      <Link href={locale === 'es' ? `/es/essays/${essay.slug}` : `/essays/${essay.slug}`} className="block">
         <div className="space-y-3">
           <div className="flex items-center gap-3 text-sm text-dark-muted">
             <time dateTime={essay.frontmatter.date}>

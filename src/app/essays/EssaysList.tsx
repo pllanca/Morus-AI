@@ -3,15 +3,18 @@
 import { useState, useMemo } from 'react'
 import { EssayCard } from '@/components/EssayCard'
 import { TagFilter } from '@/components/TagFilter'
+import { useTranslations, Locale } from '@/lib/translations'
 import type { EssayWithoutContent } from '@/types/essay'
 
 interface EssaysListProps {
   essays: EssayWithoutContent[]
   allTags: string[]
+  locale?: Locale
 }
 
-export function EssaysList({ essays, allTags }: EssaysListProps) {
+export function EssaysList({ essays, allTags, locale = 'en' }: EssaysListProps) {
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const t = useTranslations(locale)
 
   const filteredEssays = useMemo(() => {
     if (!selectedTag) return essays
@@ -31,13 +34,14 @@ export function EssaysList({ essays, allTags }: EssaysListProps) {
         tags={allTags}
         selectedTag={selectedTag}
         onTagSelect={setSelectedTag}
+        locale={locale}
       />
 
       <div className="mb-6">
         <p className="text-sm text-dark-muted">
           {selectedTag
-            ? `${essayCount} essay${essayCount !== 1 ? 's' : ''} tagged with "${selectedTag}"`
-            : `${totalCount} total essay${totalCount !== 1 ? 's' : ''}`}
+            ? `${essayCount} ${t.essays.essaysTaggedWith} "${selectedTag}"`
+            : `${totalCount} ${t.essays.totalEssays}${totalCount !== 1 ? 's' : ''}`}
         </p>
       </div>
 
@@ -45,7 +49,7 @@ export function EssaysList({ essays, allTags }: EssaysListProps) {
         <div className="py-12 text-center">
           <p className="text-dark-text">
             {selectedTag
-              ? `No essays found with the tag "${selectedTag}".`
+              ? `${t.essays.noEssaysFound} "${selectedTag}".`
               : 'No essays published yet.'}
           </p>
           {selectedTag && (
@@ -53,14 +57,14 @@ export function EssaysList({ essays, allTags }: EssaysListProps) {
               onClick={() => setSelectedTag(null)}
               className="mt-4 text-primary-500 hover:text-primary-400"
             >
-              Show all essays
+              {t.essays.showAllEssays}
             </button>
           )}
         </div>
       ) : (
         <div className="space-y-8">
           {filteredEssays.map((essay) => (
-            <EssayCard key={essay.slug} essay={essay} />
+            <EssayCard key={essay.slug} essay={essay} locale={locale} />
           ))}
         </div>
       )}

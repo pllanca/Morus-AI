@@ -1,18 +1,11 @@
 import Link from 'next/link'
 import { getAllEssays, getFeaturedEssays } from '@/lib/essays'
-import { siteConfig } from '@/lib/config'
-import { getTranslations, Locale } from '@/lib/translations'
+import { getTranslations } from '@/lib/translations'
 import { EssayCard } from '@/components/EssayCard'
 import { NewsletterSignup } from '@/components/NewsletterSignup'
 
-interface HomePageProps {
-  params: {
-    locale?: string
-  }
-}
-
-export default async function HomePage({ params }: HomePageProps) {
-  const locale = (params?.locale as Locale) || 'en'
+export default async function SpanishHomePage() {
+  const locale = 'es'
   const t = getTranslations(locale)
   
   const [featuredEssays, allEssays] = await Promise.all([
@@ -46,7 +39,7 @@ export default async function HomePage({ params }: HomePageProps) {
               {featuredEssays.length > 0 ? t.home.featuredEssays : t.home.recentEssays}
             </h2>
             <Link
-              href={locale === 'es' ? '/es/essays' : '/essays'}
+              href="/es/essays"
               className="text-sm font-medium text-primary-500 hover:text-primary-400 sm:text-base"
             >
               {t.home.viewAllEssays}
@@ -75,10 +68,7 @@ export default async function HomePage({ params }: HomePageProps) {
           {t.home.stayInLoopText}
         </p>
         <div className="mx-auto max-w-md">
-          <NewsletterSignup
-            placeholder={t.newsletter.placeholder}
-            buttonText={t.newsletter.subscribe}
-          />
+          <NewsletterSignup locale={locale} />
         </div>
       </section>
 
@@ -90,7 +80,7 @@ export default async function HomePage({ params }: HomePageProps) {
         <p className="mx-auto mb-6 max-w-2xl leading-relaxed text-dark-text">
           {t.home.aboutText}
         </p>
-        <Link href={locale === 'es' ? '/es/about' : '/about'} className="btn-primary">
+        <Link href="/es/about" className="btn-primary">
           {t.home.learnMore}
         </Link>
       </section>

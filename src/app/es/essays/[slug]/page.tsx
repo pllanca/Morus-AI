@@ -12,29 +12,29 @@ import { MDXComponents } from '@/components/MDXComponents'
 import { SocialShare } from '@/components/SocialShare'
 import { NewsletterSignup } from '@/components/NewsletterSignup'
 
-interface EssayPageProps {
+interface SpanishEssayPageProps {
   params: {
     slug: string
   }
 }
 
 export async function generateStaticParams() {
-  const slugs = await getEssaySlugs('en')
+  const slugs = await getEssaySlugs('es')
   return slugs.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({
   params,
-}: EssayPageProps): Promise<Metadata> {
-  const essay = await getEssayBySlug(params.slug, 'en')
+}: SpanishEssayPageProps): Promise<Metadata> {
+  const essay = await getEssayBySlug(params.slug, 'es')
 
   if (!essay) {
     return {
-      title: 'Essay Not Found',
+      title: 'Ensayo No Encontrado',
     }
   }
 
-  const url = `${getBaseUrl()}/essays/${params.slug}`
+  const url = `${getBaseUrl()}/es/essays/${params.slug}`
   const ogImage = generateOgImageUrl(
     essay.frontmatter.title,
     essay.frontmatter.summary
@@ -51,6 +51,7 @@ export async function generateMetadata({
       publishedTime: essay.frontmatter.date,
       authors: [essay.frontmatter.author || siteConfig.author],
       url,
+      locale: 'es_ES',
       images: [
         {
           url: ogImage,
@@ -71,8 +72,8 @@ export async function generateMetadata({
   }
 }
 
-export default async function EssayPage({ params }: EssayPageProps) {
-  const locale = 'en'
+export default async function SpanishEssayPage({ params }: SpanishEssayPageProps) {
+  const locale = 'es'
   const t = getTranslations(locale)
   const essay = await getEssayBySlug(params.slug, locale)
 
@@ -80,7 +81,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
     notFound()
   }
 
-  const essayUrl = `${getBaseUrl()}/essays/${params.slug}`
+  const essayUrl = `${getBaseUrl()}/es/essays/${params.slug}`
 
   return (
     <article className="container py-12 sm:py-16">

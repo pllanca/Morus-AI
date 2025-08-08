@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Layout } from '@/components/Layout'
 import { siteConfig } from '@/lib/config'
+import { Locale } from '@/lib/translations'
 import './globals.css'
 
 const inter = Inter({

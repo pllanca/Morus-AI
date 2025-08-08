@@ -33,7 +33,7 @@ export default async function EssaysPage() {
         </p>
       </div>
 
-      <EssaysList essays={essays} allTags={allTags} />
+      <EssaysList essays={essays} allTags={allTags} locale="en" />
     </div>
   )
 }
