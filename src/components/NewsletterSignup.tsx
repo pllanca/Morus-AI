@@ -73,7 +73,7 @@ export function NewsletterSignup({
         )}
       >
         <p className="font-medium text-primary-400">{message}</p>
-        <p className="mt-2 text-sm text-dark-muted">
+        <p className="mt-2 text-sm text-theme-muted">
           {t.newsletter.confirmEmail}
         </p>
       </div>
@@ -109,7 +109,7 @@ export function NewsletterSignup({
           <p className="mt-2 text-sm text-red-400">{message}</p>
         )}
 
-        <p className="mt-2 text-xs text-dark-muted">
+        <p className="mt-2 text-xs text-theme-muted">
           {t.newsletter.noSpam}
         </p>
       </form>

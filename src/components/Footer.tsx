@@ -2,8 +2,10 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import { siteConfig } from '@/lib/config'
 import { useTranslations, Locale } from '@/lib/translations'
+import { cn } from '@/lib/utils'
 import { NewsletterSignup } from './NewsletterSignup'
 
 export function Footer() {
@@ -11,19 +13,23 @@ export function Footer() {
   const locale = pathname.startsWith('/es') ? 'es' : 'en'
   const t = useTranslations(locale as Locale)
   
-  const currentYear = new Date().getFullYear()
+  const [currentYear, setCurrentYear] = useState<number | null>(null)
   const socialLinks = Object.entries(siteConfig.social).filter(([, url]) => url)
 
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear())
+  }, [])
+
   return (
-    <footer className="border-t border-dark-border bg-dark-bg">
+    <footer className="border-t transition-colors duration-200">
       <div className="container py-16">
         {/* Newsletter Section */}
         <div className="mb-12">
           <div className="mx-auto max-w-md text-center">
-            <h3 className="mb-3 text-xl font-semibold text-white">
+            <h3 className="mb-3 text-xl font-semibold text-theme-primary transition-colors duration-200">
               {t.newsletter.stayUpdated}
             </h3>
-            <p className="mb-6 text-dark-text">
+            <p className="mb-6 text-theme-secondary transition-colors duration-200">
               {t.newsletter.stayUpdatedText}
             </p>
             <NewsletterSignup locale={locale} />
@@ -35,13 +41,13 @@ export function Footer() {
           <div className="flex items-center space-x-8">
             <Link
               href={locale === 'es' ? '/es/essays' : '/essays'}
-              className="text-sm text-dark-text hover:text-primary-500"
+              className="text-sm text-theme-secondary hover:text-primary-500"
             >
               {t.footer.allEssays}
             </Link>
             <Link
               href={locale === 'es' ? '/es/about' : '/about'}
-              className="text-sm text-dark-text hover:text-primary-500"
+              className="text-sm text-theme-secondary hover:text-primary-500"
             >
               {t.footer.about}
             </Link>
@@ -55,7 +61,7 @@ export function Footer() {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm capitalize text-dark-text hover:text-primary-500"
+                  className="text-sm capitalize text-theme-secondary hover:text-primary-500"
                 >
                   {platform === 'email' ? t.footer.contact : platform}
                 </a>
@@ -64,9 +70,9 @@ export function Footer() {
           )}
         </div>
 
-        <div className="mt-8 border-t border-dark-border pt-8 text-center">
-          <p className="text-sm text-dark-muted">
-            &copy; {currentYear} {siteConfig.author}. {t.footer.allRightsReserved}
+        <div className="mt-8 border-t border-theme pt-8 text-center">
+          <p className="text-sm text-theme-muted">
+            &copy; {currentYear || '2024'} {siteConfig.author}. {t.footer.allRightsReserved}
           </p>
         </div>
       </div>

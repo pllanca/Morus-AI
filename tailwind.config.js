@@ -29,17 +29,18 @@ module.exports = {
           text: '#bfbfbc', // Main text color from claudelog.com
           muted: '#8a8a87',
         },
+        light: {
+          bg: '#ffffff',
+          card: '#f8f9fa',
+          border: '#e9ecef',
+          text: '#343a40',
+          muted: '#6c757d',
+        },
       },
       fontFamily: {
-        sans: [
-          'TWKLausanne',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'Segoe UI',
-          'Roboto',
-          'system-ui',
-          'sans-serif',
-        ],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        headline: ['var(--font-montserrat)', 'system-ui', 'sans-serif'],
+        accent: ['var(--font-merriweather)', 'Georgia', 'serif'],
         mono: ['SF Mono', 'Monaco', 'Consolas', 'monospace'],
       },
       maxWidth: {

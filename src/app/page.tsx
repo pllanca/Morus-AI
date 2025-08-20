@@ -27,13 +27,13 @@ export default async function HomePage({ params }: HomePageProps) {
     <div className="container py-12 sm:py-16 lg:py-20">
       {/* Hero Section */}
       <section className="mb-16 text-center sm:mb-20">
-        <h1 className="mb-6 text-balance text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+        <h1 className="mb-6 text-balance text-4xl font-bold text-theme-primary sm:text-5xl lg:text-6xl">
           {t.home.heroTitle.split(' ').slice(0, -1).join(' ')}{' '}
           <span className="text-primary-500">
             {t.home.heroTitle.split(' ').slice(-1)}
           </span>
         </h1>
-        <p className="mx-auto max-w-3xl text-balance text-xl leading-relaxed text-dark-text sm:text-2xl">
+        <p className="mx-auto max-w-3xl text-balance text-xl leading-relaxed text-theme-secondary sm:text-2xl">
           {t.home.heroSubtitle}
         </p>
       </section>
@@ -42,7 +42,7 @@ export default async function HomePage({ params }: HomePageProps) {
       {essaysToShow.length > 0 && (
         <section className="mb-16 sm:mb-20">
           <div className="mb-8 flex items-center justify-between">
-            <h2 className="text-2xl font-semibold text-white sm:text-3xl">
+            <h2 className="text-2xl font-semibold text-theme-primary sm:text-3xl">
               {featuredEssays.length > 0 ? t.home.featuredEssays : t.home.recentEssays}
             </h2>
             <Link
@@ -67,11 +67,11 @@ export default async function HomePage({ params }: HomePageProps) {
       )}
 
       {/* Newsletter CTA */}
-      <section className="rounded-xl border border-dark-border bg-dark-card p-8 text-center sm:p-12">
-        <h2 className="mb-4 text-2xl font-semibold text-white sm:text-3xl">
+      <section className="rounded-xl border border-theme bg-theme-card p-8 text-center sm:p-12">
+        <h2 className="mb-4 text-2xl font-semibold text-theme-primary sm:text-3xl">
           {t.home.stayInLoop}
         </h2>
-        <p className="mx-auto mb-8 max-w-2xl text-lg text-dark-text">
+        <p className="mx-auto mb-8 max-w-2xl text-lg text-theme-secondary">
           {t.home.stayInLoopText}
         </p>
         <div className="mx-auto max-w-md">
@@ -84,10 +84,10 @@ export default async function HomePage({ params }: HomePageProps) {
 
       {/* About Teaser */}
       <section className="mt-16 text-center sm:mt-20">
-        <h3 className="mb-4 text-xl font-semibold text-white sm:text-2xl">
+        <h3 className="mb-4 text-xl font-semibold text-theme-primary sm:text-2xl">
           {t.home.aboutAuthor}
         </h3>
-        <p className="mx-auto mb-6 max-w-2xl leading-relaxed text-dark-text">
+        <p className="mx-auto mb-6 max-w-2xl leading-relaxed text-theme-secondary">
           {t.home.aboutText}
         </p>
         <Link href={locale === 'es' ? '/es/about' : '/about'} className="btn-primary">

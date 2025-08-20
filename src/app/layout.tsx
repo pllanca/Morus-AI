@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Montserrat, Merriweather } from 'next/font/google'
 import { Layout } from '@/components/Layout'
 import { siteConfig } from '@/lib/config'
 import { Locale } from '@/lib/translations'
@@ -8,6 +8,19 @@ import './globals.css'
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
+  display: 'swap',
+})
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  display: 'swap',
+})
+
+const merriweather = Merriweather({
+  subsets: ['latin'],
+  weight: ['300', '400', '700'],
+  variable: '--font-merriweather',
   display: 'swap',
 })
 
@@ -58,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${montserrat.variable} ${merriweather.variable}`}>
       <body className="antialiased">
         <Layout>{children}</Layout>
       </body>

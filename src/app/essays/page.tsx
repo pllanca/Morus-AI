@@ -23,10 +23,10 @@ export default async function EssaysPage() {
   return (
     <div className="container py-12 sm:py-16">
       <div className="mb-12">
-        <h1 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
+        <h1 className="mb-4 text-4xl font-bold text-theme-primary sm:text-5xl">
           All Essays
         </h1>
-        <p className="max-w-2xl text-xl leading-relaxed text-dark-text">
+        <p className="max-w-2xl text-xl leading-relaxed text-theme-secondary">
           A collection of my thoughts, ideas, and reflections on the world
           around us. Each piece is crafted with care and intended to spark
           thoughtful conversation.

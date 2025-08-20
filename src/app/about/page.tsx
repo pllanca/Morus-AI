@@ -26,7 +26,7 @@ export default function AboutPage() {
         <div className="mb-16 grid gap-12 lg:grid-cols-3">
           {/* Author Photo */}
           <div className="lg:col-span-1">
-            <div className="aspect-square overflow-hidden rounded-xl border border-dark-border bg-dark-card">
+            <div className="aspect-square overflow-hidden rounded-xl border border-theme bg-theme-card">
               {/* Placeholder for author photo - replace with actual image */}
               <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary-500/20 to-primary-600/20">
                 <div className="flex h-24 w-24 items-center justify-center rounded-full bg-primary-500/30">
@@ -51,17 +51,17 @@ export default function AboutPage() {
           {/* Bio Content */}
           <div className="space-y-6 lg:col-span-2">
             <div>
-              <h1 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
+              <h1 className="mb-4 text-4xl font-bold text-theme-primary sm:text-5xl">
                 About {siteConfig.author}
               </h1>
-              <p className="text-xl leading-relaxed text-dark-text">
+              <p className="text-xl leading-relaxed text-theme-secondary">
                 Writer, thinker, and explorer of ideas at the intersection of
                 technology and humanity.
               </p>
             </div>
 
             <div className="prose prose-lg max-w-none">
-              <p className="mb-6 leading-relaxed text-dark-text">
+              <p className="mb-6 leading-relaxed text-theme-secondary">
                 Hello! I'm {siteConfig.author}, and I'm passionate about
                 exploring complex ideas through clear, thoughtful writing. My
                 work spans technology, philosophy, and the human experience,
@@ -69,7 +69,7 @@ export default function AboutPage() {
                 everyday.
               </p>
 
-              <p className="mb-6 leading-relaxed text-dark-text">
+              <p className="mb-6 leading-relaxed text-theme-secondary">
                 I believe that writing is thinking made visible. Each essay is
                 an opportunity to wrestle with questions that matter, to
                 challenge assumptions, and to share the insights that emerge
@@ -79,7 +79,7 @@ export default function AboutPage() {
                 worth reading.
               </p>
 
-              <p className="mb-6 leading-relaxed text-dark-text">
+              <p className="mb-6 leading-relaxed text-theme-secondary">
                 When I'm not writing, you can find me reading voraciously,
                 taking long walks to think through ideas, and having
                 conversations with curious people who share my love of learning
@@ -90,7 +90,7 @@ export default function AboutPage() {
             {/* Social Links */}
             {socialLinks.length > 0 && (
               <div className="pt-6">
-                <h3 className="mb-4 text-lg font-semibold text-white">
+                <h3 className="mb-4 text-lg font-semibold text-theme-primary">
                   Connect with me
                 </h3>
                 <div className="flex flex-wrap gap-4">
@@ -112,11 +112,11 @@ export default function AboutPage() {
         </div>
 
         {/* Newsletter Section */}
-        <div className="rounded-xl border border-dark-border bg-dark-card p-8 text-center sm:p-12">
-          <h2 className="mb-4 text-2xl font-semibold text-white sm:text-3xl">
+        <div className="rounded-xl border border-theme bg-theme-card p-8 text-center sm:p-12">
+          <h2 className="mb-4 text-2xl font-semibold text-theme-primary sm:text-3xl">
             Let's stay connected
           </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-lg text-dark-text">
+          <p className="mx-auto mb-8 max-w-2xl text-lg text-theme-secondary">
             I send occasional essays to a small group of thoughtful readers. No
             spam, no sales pitches— just ideas worth sharing when they're ready.
           </p>
@@ -130,7 +130,7 @@ export default function AboutPage() {
 
         {/* Philosophy/Approach */}
         <div className="mt-16">
-          <h2 className="mb-8 text-center text-2xl font-semibold text-white sm:text-3xl">
+          <h2 className="mb-8 text-center text-2xl font-semibold text-theme-primary sm:text-3xl">
             My Writing Philosophy
           </h2>
           <div className="grid gap-8 md:grid-cols-3">
@@ -138,10 +138,10 @@ export default function AboutPage() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary-500/20">
                 <span className="text-2xl">💭</span>
               </div>
-              <h3 className="mb-3 text-lg font-semibold text-white">
+              <h3 className="mb-3 text-lg font-semibold text-theme-primary">
                 Thoughtful
               </h3>
-              <p className="text-dark-text">
+              <p className="text-theme-secondary">
                 Every essay is carefully crafted, with ideas developed through
                 research, reflection, and genuine curiosity.
               </p>
@@ -151,8 +151,8 @@ export default function AboutPage() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary-500/20">
                 <span className="text-2xl">🎯</span>
               </div>
-              <h3 className="mb-3 text-lg font-semibold text-white">Focused</h3>
-              <p className="text-dark-text">
+              <h3 className="mb-3 text-lg font-semibold text-theme-primary">Focused</h3>
+              <p className="text-theme-secondary">
                 Clear ideas, clearly expressed. I believe in the power of
                 precision and the beauty of well-chosen words.
               </p>
@@ -162,8 +162,8 @@ export default function AboutPage() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary-500/20">
                 <span className="text-2xl">🌱</span>
               </div>
-              <h3 className="mb-3 text-lg font-semibold text-white">Growing</h3>
-              <p className="text-dark-text">
+              <h3 className="mb-3 text-lg font-semibold text-theme-primary">Growing</h3>
+              <p className="text-theme-secondary">
                 Writing is learning in public. I share what I'm discovering as I
                 discover it, embracing growth and change.
               </p>
