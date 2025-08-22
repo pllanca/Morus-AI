@@ -1,31 +1,82 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { newsletterConfig } from '@/lib/config'
+import { newsletterRateLimit } from '@/lib/rate-limit'
+
+// Input validation
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email) && email.length <= 254
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json()
+    // Rate limiting
+    const rateLimitResult = newsletterRateLimit(request)
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { 
+          error: true, 
+          message: 'Too many subscription attempts. Please try again later.',
+          retryAfter: rateLimitResult.retryAfter 
+        },
+        { 
+          status: 429,
+          headers: {
+            'Retry-After': rateLimitResult.retryAfter?.toString() || '900',
+            'X-RateLimit-Limit': rateLimitResult.limit.toString(),
+            'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+            'X-RateLimit-Reset': new Date(rateLimitResult.resetTime).toISOString(),
+          }
+        }
+      )
+    }
 
-    if (!email || !email.includes('@')) {
+    // Parse and validate request body
+    let body
+    try {
+      body = await request.json()
+    } catch {
+      return NextResponse.json(
+        { error: true, message: 'Invalid request format.' },
+        { status: 400 }
+      )
+    }
+
+    const { email } = body
+
+    if (!email || typeof email !== 'string') {
+      return NextResponse.json(
+        { error: true, message: 'Email address is required.' },
+        { status: 400 }
+      )
+    }
+
+    if (!validateEmail(email.trim())) {
       return NextResponse.json(
         { error: true, message: 'Please provide a valid email address.' },
         { status: 400 }
       )
     }
 
+    const normalizedEmail = email.trim().toLowerCase()
+
     // Try different newsletter services in order of preference
     let result = null
+    const errors: string[] = []
 
     // Try Mailchimp first
     if (
       newsletterConfig.mailchimp.apiKey &&
       newsletterConfig.mailchimp.audienceId
     ) {
-      result = await subscribeToMailchimp(email)
+      result = await subscribeToMailchimp(normalizedEmail)
       if (result.success) {
         return NextResponse.json({
           success: true,
           message: 'Successfully subscribed to the newsletter!',
         })
+      } else {
+        errors.push('Mailchimp service unavailable')
       }
     }
 
@@ -34,19 +85,21 @@ export async function POST(request: NextRequest) {
       newsletterConfig.convertkit.apiKey &&
       newsletterConfig.convertkit.formId
     ) {
-      result = await subscribeToConvertKit(email)
+      result = await subscribeToConvertKit(normalizedEmail)
       if (result.success) {
         return NextResponse.json({
           success: true,
           message: 'Successfully subscribed to the newsletter!',
         })
+      } else {
+        errors.push('ConvertKit service unavailable')
       }
     }
 
     // Fallback: Just return success (for development/testing)
     // In production, you should implement at least one service
     if (process.env.NODE_ENV === 'development') {
-      console.log(`Newsletter signup (dev mode): ${email}`)
+      console.log(`Newsletter signup (dev mode): ${normalizedEmail}`)
       return NextResponse.json({
         success: true,
         message:
@@ -54,17 +107,30 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    // Log errors for monitoring (in production, use proper logging service)
+    console.error('Newsletter subscription failed:', {
+      email: normalizedEmail,
+      errors,
+      timestamp: new Date().toISOString(),
+    })
+
     return NextResponse.json(
       {
         error: true,
-        message: 'Newsletter service not configured. Please try again later.',
+        message: 'Newsletter service temporarily unavailable. Please try again later.',
       },
-      { status: 500 }
+      { status: 503 }
     )
   } catch (error) {
-    console.error('Newsletter signup error:', error)
+    // Log error for monitoring
+    console.error('Newsletter signup error:', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      timestamp: new Date().toISOString(),
+    })
+    
     return NextResponse.json(
-      { error: true, message: 'Something went wrong. Please try again.' },
+      { error: true, message: 'An unexpected error occurred. Please try again later.' },
       { status: 500 }
     )
   }

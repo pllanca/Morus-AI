@@ -1,10 +1,27 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "prettier"
+  ],
   "rules": {
+    // General JavaScript rules
     "prefer-const": "error",
     "no-var": "error",
     "no-console": "warn",
+    "no-debugger": "error",
+    "no-alert": "warn",
+    "eqeqeq": ["error", "always"],
+    
+    // React rules
     "react-hooks/exhaustive-deps": "warn",
-    "react/no-unescaped-entities": "off"
+    "react/no-unescaped-entities": "off",
+    "react/jsx-no-target-blank": "error",
+    "react/jsx-key": "error",
+    
+    // Security rules
+    "no-eval": "error",
+    "no-implied-eval": "error",
+    "no-new-func": "error",
+    "no-script-url": "error"
   }
 }

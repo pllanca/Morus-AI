@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { siteConfig } from '@/lib/config'
 import { useTranslations, Locale } from '@/lib/translations'
+import { useLocale, getNavigationUrls, switchLocaleForPath } from '@/hooks/useLocale'
 import { cn } from '@/lib/utils'
 import { Brain, Home, BookOpen, User, Globe, Sun, Moon, Menu } from 'lucide-react'
 import { MobileMenu } from './MobileMenu'
@@ -46,28 +47,24 @@ export function Header() {
     }
   }
   
-  // Extract locale from pathname
-  const locale = pathname.startsWith('/es') ? 'es' : 'en'
-  const t = useTranslations(locale as Locale)
+  // Use centralized locale detection
+  const locale = useLocale()
+  const t = useTranslations(locale)
+  const navigationUrls = getNavigationUrls(locale)
 
   const navigation = [
-    { name: t.nav.home, href: locale === 'es' ? '/es' : '/', icon: Home },
-    { name: t.nav.essays, href: locale === 'es' ? '/es/essays' : '/essays', icon: BookOpen },
-    { name: t.nav.about, href: locale === 'es' ? '/es/about' : '/about', icon: User },
+    { name: t.nav.home, href: navigationUrls.home, icon: Home },
+    { name: t.nav.essays, href: navigationUrls.essays, icon: BookOpen },
+    { name: t.nav.about, href: navigationUrls.about, icon: User },
   ]
 
   const switchLanguage = () => {
     const newLocale = locale === 'en' ? 'es' : 'en'
-    let newPath = pathname
+    const newPath = switchLocaleForPath(pathname, newLocale)
     
-    if (locale === 'es') {
-      // Remove /es prefix
-      newPath = pathname.replace('/es', '') || '/'
-    } else {
-      // Add /es prefix
-      newPath = '/es' + pathname
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Header switchLanguage - current locale:', locale, 'new locale:', newLocale, 'new path:', newPath)
     }
-    
     router.push(newPath)
   }
 
@@ -96,7 +93,7 @@ export function Header() {
     )}>
       <div className="container">
         <div className="flex h-16 items-center justify-between">
-          <Link href={locale === 'es' ? '/es' : '/'} className="flex items-center space-x-2 sm:space-x-3 group">
+          <Link href={navigationUrls.home} className="flex items-center space-x-2 sm:space-x-3 group">
             <div className="transition-transform duration-200 group-hover:scale-110">
               <Brain size={20} className="text-primary-500 sm:w-6 sm:h-6" />
             </div>

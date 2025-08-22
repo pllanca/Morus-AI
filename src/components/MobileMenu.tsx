@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { useTranslations, Locale } from '@/lib/translations'
+import { useLocale, getNavigationUrls } from '@/hooks/useLocale'
 import { Brain, Home, BookOpen, User, Globe, Sun, Moon, X } from 'lucide-react'
 
 interface MobileMenuProps {
@@ -22,13 +23,14 @@ export function MobileMenu({
   onSwitchLanguage 
 }: MobileMenuProps) {
   const pathname = usePathname()
-  const locale = pathname.startsWith('/es') ? 'es' : 'en'
-  const t = useTranslations(locale as Locale)
+  const locale = useLocale()
+  const t = useTranslations(locale)
+  const navigationUrls = getNavigationUrls(locale)
 
   const navigation = [
-    { name: t.nav.home, href: locale === 'es' ? '/es' : '/', icon: Home },
-    { name: t.nav.essays, href: locale === 'es' ? '/es/essays' : '/essays', icon: BookOpen },
-    { name: t.nav.about, href: locale === 'es' ? '/es/about' : '/about', icon: User },
+    { name: t.nav.home, href: navigationUrls.home, icon: Home },
+    { name: t.nav.essays, href: navigationUrls.essays, icon: BookOpen },
+    { name: t.nav.about, href: navigationUrls.about, icon: User },
   ]
 
   if (!isOpen) return null

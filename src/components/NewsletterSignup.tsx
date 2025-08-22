@@ -31,36 +31,65 @@ export function NewsletterSignup({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!email || !email.includes('@')) {
+    // Basic client-side validation
+    const trimmedEmail = email.trim()
+    if (!trimmedEmail) {
+      setStatus('error')
+      setMessage(t.newsletter.invalidEmail)
+      return
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(trimmedEmail)) {
       setStatus('error')
       setMessage(t.newsletter.invalidEmail)
       return
     }
 
     setStatus('loading')
+    setMessage('')
 
     try {
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+
       const response = await fetch('/api/newsletter', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: trimmedEmail }),
+        signal: controller.signal,
       })
 
-      const data = await response.json()
+      clearTimeout(timeoutId)
+
+      let data
+      try {
+        data = await response.json()
+      } catch {
+        throw new Error('Invalid response from server')
+      }
 
       if (response.ok) {
         setStatus('success')
-        setMessage(t.newsletter.successMessage)
+        setMessage(data.message || t.newsletter.successMessage)
         setEmail('')
+      } else if (response.status === 429) {
+        setStatus('error')
+        setMessage(data.message || 'Too many attempts. Please try again later.')
       } else {
         setStatus('error')
         setMessage(data.message || t.newsletter.genericError)
       }
     } catch (error) {
-      setStatus('error')
-      setMessage(t.newsletter.networkError)
+      if (error instanceof Error && error.name === 'AbortError') {
+        setStatus('error')
+        setMessage('Request timed out. Please try again.')
+      } else {
+        setStatus('error')
+        setMessage(t.newsletter.networkError)
+      }
     }
   }
 
@@ -97,11 +126,18 @@ export function NewsletterSignup({
             type="submit"
             disabled={status === 'loading'}
             className={cn(
-              'newsletter-button btn-mobile',
+              'newsletter-button btn-mobile relative',
               status === 'loading' && 'cursor-not-allowed opacity-75'
             )}
           >
-            {status === 'loading' ? t.newsletter.subscribing : finalButtonText}
+            {status === 'loading' && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              </div>
+            )}
+            <span className={status === 'loading' ? 'invisible' : ''}>
+              {status === 'loading' ? t.newsletter.subscribing : finalButtonText}
+            </span>
           </button>
         </div>
 

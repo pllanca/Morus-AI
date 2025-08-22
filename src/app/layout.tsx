@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { Inter, Montserrat, Merriweather } from 'next/font/google'
 import { Layout } from '@/components/Layout'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { siteConfig } from '@/lib/config'
 import { Locale } from '@/lib/translations'
 import './globals.css'
@@ -73,7 +74,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${montserrat.variable} ${merriweather.variable}`}>
       <body className="antialiased">
-        <Layout>{children}</Layout>
+        <ErrorBoundary showDetails={process.env.NODE_ENV === 'development'}>
+          <Layout>{children}</Layout>
+        </ErrorBoundary>
       </body>
     </html>
   )
