@@ -89,7 +89,7 @@ export function NewsletterSignup({
             placeholder={finalPlaceholder}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="newsletter-input flex-1"
+            className="newsletter-input flex-1 touch-target"
             disabled={status === 'loading'}
             required
           />
@@ -97,7 +97,7 @@ export function NewsletterSignup({
             type="submit"
             disabled={status === 'loading'}
             className={cn(
-              'newsletter-button',
+              'newsletter-button btn-mobile',
               status === 'loading' && 'cursor-not-allowed opacity-75'
             )}
           >
@@ -109,7 +109,7 @@ export function NewsletterSignup({
           <p className="mt-2 text-sm text-red-400">{message}</p>
         )}
 
-        <p className="mt-2 text-xs text-theme-muted">
+        <p className="mt-2 text-xs sm:text-sm text-theme-muted">
           {t.newsletter.noSpam}
         </p>
       </form>

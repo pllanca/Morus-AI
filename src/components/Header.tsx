@@ -6,13 +6,15 @@ import { useState, useEffect } from 'react'
 import { siteConfig } from '@/lib/config'
 import { useTranslations, Locale } from '@/lib/translations'
 import { cn } from '@/lib/utils'
-import { Brain, Home, BookOpen, User, Globe, Sun, Moon } from 'lucide-react'
+import { Brain, Home, BookOpen, User, Globe, Sun, Moon, Menu } from 'lucide-react'
+import { MobileMenu } from './MobileMenu'
 
 export function Header() {
   const pathname = usePathname()
   const router = useRouter()
   const [theme, setTheme] = useState<'dark' | 'light'>('dark')
   const [mounted, setMounted] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -69,8 +71,23 @@ export function Header() {
     router.push(newPath)
   }
 
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
+  }
+
+  const openMobileMenu = () => {
+    setIsMobileMenuOpen(true)
+  }
 
   return (
+    <>
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={closeMobileMenu}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+        onSwitchLanguage={switchLanguage}
+      />
     <header className={cn(
       "sticky top-0 z-50 w-full border-b backdrop-blur-sm transition-colors duration-200",
       theme === 'dark' 
@@ -79,19 +96,20 @@ export function Header() {
     )}>
       <div className="container">
         <div className="flex h-16 items-center justify-between">
-          <Link href={locale === 'es' ? '/es' : '/'} className="flex items-center space-x-3 group">
+          <Link href={locale === 'es' ? '/es' : '/'} className="flex items-center space-x-2 sm:space-x-3 group">
             <div className="transition-transform duration-200 group-hover:scale-110">
-              <Brain size={24} className="text-primary-500" />
+              <Brain size={20} className="text-primary-500 sm:w-6 sm:h-6" />
             </div>
             <span className={cn(
-              "text-xl font-headline font-bold transition-colors duration-200",
+              "text-lg sm:text-xl font-headline font-bold transition-colors duration-200",
               theme === 'dark' ? "text-white" : "text-light-text"
             )}>
               {siteConfig.name}
             </span>
           </Link>
 
-          <nav className="flex items-center space-x-8">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
             {navigation.map((item) => {
               const IconComponent = item.icon
               const isActive = pathname === item.href
@@ -167,8 +185,23 @@ export function Header() {
               )}
             </button>
           </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={openMobileMenu}
+            className={cn(
+              "md:hidden p-2 rounded-md transition-colors",
+              theme === 'dark' 
+                ? "hover:bg-dark-card text-dark-text" 
+                : "hover:bg-light-card text-light-text"
+            )}
+            aria-label="Open menu"
+          >
+            <Menu size={20} />
+          </button>
         </div>
       </div>
     </header>
+    </>
   )
 }
