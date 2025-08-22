@@ -153,7 +153,7 @@ export function Header() {
                   size={16} 
                   className={cn(
                     "group-hover:text-primary-500 group-hover:scale-110 transition-all duration-200",
-                    theme === 'dark' ? 'text-dark-muted' : 'text-light-muted'
+                    'text-dark-muted'
                   )}
                 />
               ) : (
@@ -161,7 +161,7 @@ export function Header() {
                   size={16} 
                   className={cn(
                     "group-hover:text-primary-500 group-hover:scale-110 transition-all duration-200",
-                    theme === 'dark' ? 'text-dark-muted' : 'text-light-muted'
+                    'text-light-muted'
                   )}
                 />
               )}
