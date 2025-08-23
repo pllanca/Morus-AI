@@ -93,7 +93,7 @@ export default async function SpanishEssayPage({ params }: SpanishEssayPageProps
               {essay.frontmatter.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-md border border-dark-border bg-dark-card px-2 py-1 text-xs text-dark-text"
+                  className="rounded-md border-theme bg-theme-card px-2 py-1 text-xs text-theme-secondary"
                 >
                   {tag}
                 </span>
@@ -101,19 +101,19 @@ export default async function SpanishEssayPage({ params }: SpanishEssayPageProps
             </div>
           )}
 
-          <h1 className="mb-6 text-balance text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="mb-6 text-balance text-4xl font-bold leading-tight text-theme-primary sm:text-5xl lg:text-6xl">
             {essay.frontmatter.title}
           </h1>
 
           {essay.frontmatter.summary && (
-            <p className="text-balance text-xl leading-relaxed text-dark-text sm:text-2xl">
+            <p className="text-balance text-xl leading-relaxed text-theme-secondary sm:text-2xl">
               {essay.frontmatter.summary}
             </p>
           )}
         </div>
 
-        <div className="flex flex-col gap-4 border-b border-t border-dark-border py-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4 text-sm text-dark-muted">
+        <div className="flex flex-col gap-4 border-b border-t border-theme py-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4 text-sm text-theme-muted">
             <span>{t.essayDetail.by} {essay.frontmatter.author || siteConfig.author}</span>
             <span>•</span>
             <time dateTime={essay.frontmatter.date}>
@@ -148,19 +148,19 @@ export default async function SpanishEssayPage({ params }: SpanishEssayPageProps
         </div>
 
         {/* Author Bio & Newsletter CTA */}
-        <div className="mx-auto mt-16 max-w-70ch border-t border-dark-border pt-16">
-          <div className="rounded-xl border border-dark-border bg-dark-card p-8">
+        <div className="mx-auto mt-16 max-w-70ch border-t border-theme pt-16">
+          <div className="rounded-xl border-theme bg-theme-card p-8">
             <div className="text-center">
-              <h3 className="mb-4 text-xl font-semibold text-white">
+              <h3 className="mb-4 text-xl font-semibold text-theme-primary">
                 {t.essayDetail.thanksForReading}
               </h3>
-              <p className="mb-6 leading-relaxed text-dark-text">
+              <p className="mb-6 leading-relaxed text-theme-secondary">
                 {t.essayDetail.thanksText}
               </p>
 
               <div className="space-y-6">
                 <div>
-                  <p className="mb-4 text-sm text-dark-muted">
+                  <p className="mb-4 text-sm text-theme-muted">
                     {t.newsletter.getNotified}
                   </p>
                   <NewsletterSignup locale={locale} />

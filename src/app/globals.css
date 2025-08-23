@@ -213,6 +213,10 @@
     @apply prose prose-lg max-w-none;
   }
 
+  .light .essay-content {
+    @apply prose-light;
+  }
+
   /* Newsletter signup styling */
   .newsletter-form {
     @apply space-y-4;

@@ -16,7 +16,7 @@ export function TagFilter({ tags, selectedTag, onTagSelect, locale = 'en' }: Tag
 
   return (
     <div className="mb-8">
-      <h3 className="mb-4 text-sm font-medium text-dark-text">
+      <h3 className="mb-4 text-sm font-medium text-theme-secondary">
         {t.essays.filterByTopic}
       </h3>
       <div className="flex flex-wrap gap-2">
@@ -26,7 +26,7 @@ export function TagFilter({ tags, selectedTag, onTagSelect, locale = 'en' }: Tag
             'rounded-full border px-3 py-1.5 text-sm transition-all duration-200',
             selectedTag === null
               ? 'border-primary-500 bg-primary-500 text-white'
-              : 'border-dark-border bg-dark-card text-dark-text hover:border-primary-500 hover:text-primary-500'
+              : 'border-theme bg-theme-card text-theme-secondary hover:border-primary-500 hover:text-primary-500'
           )}
         >
           {t.essays.allEssays}
@@ -39,7 +39,7 @@ export function TagFilter({ tags, selectedTag, onTagSelect, locale = 'en' }: Tag
               'rounded-full border px-3 py-1.5 text-sm transition-all duration-200',
               selectedTag === tag
                 ? 'border-primary-500 bg-primary-500 text-white'
-                : 'border-dark-border bg-dark-card text-dark-text hover:border-primary-500 hover:text-primary-500'
+                : 'border-theme bg-theme-card text-theme-secondary hover:border-primary-500 hover:text-primary-500'
             )}
           >
             {tag}

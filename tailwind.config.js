@@ -135,6 +135,38 @@ module.exports = {
             },
           },
         },
+        light: {
+          css: {
+            color: theme('colors.light.text'),
+            h1: {
+              color: theme('colors.light.text'),
+            },
+            h2: {
+              color: theme('colors.light.text'),
+            },
+            h3: {
+              color: theme('colors.light.text'),
+            },
+            strong: {
+              color: theme('colors.light.text'),
+            },
+            blockquote: {
+              color: theme('colors.light.text'),
+              backgroundColor: theme('colors.light.card'),
+            },
+            code: {
+              backgroundColor: theme('colors.light.card'),
+              color: theme('colors.primary.600'),
+            },
+            pre: {
+              backgroundColor: theme('colors.light.card'),
+              border: `1px solid ${theme('colors.light.border')}`,
+            },
+            'pre code': {
+              color: theme('colors.light.text'),
+            },
+          },
+        },
       }),
     },
   },

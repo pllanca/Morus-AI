@@ -20,7 +20,7 @@ function CustomImage({ src, alt, width, height, ...props }: CustomImageProps) {
         alt={alt}
         width={width || 800}
         height={height || 400}
-        className="rounded-lg border border-dark-border"
+        className="rounded-lg border-theme"
         style={{ width: '100%', height: 'auto' }}
         {...props}
       />
@@ -75,7 +75,7 @@ function CustomBlockquote({
 }) {
   return (
     <blockquote
-      className="my-6 border-l-4 border-primary-500 bg-dark-card py-4 pl-6 italic text-dark-text"
+      className="my-6 border-l-4 border-primary-500 bg-theme-card py-4 pl-6 italic text-theme-secondary"
       {...props}
     >
       {children}
@@ -92,7 +92,7 @@ function CustomCode({
 }) {
   return (
     <code
-      className="rounded bg-dark-card px-1.5 py-0.5 font-mono text-sm text-primary-400"
+      className="rounded bg-theme-card px-1.5 py-0.5 font-mono text-sm text-primary-400"
       {...props}
     >
       {children}
@@ -109,7 +109,7 @@ function CustomPre({
 }) {
   return (
     <pre
-      className="my-6 overflow-x-auto rounded-lg border border-dark-border bg-dark-card p-4"
+      className="my-6 overflow-x-auto rounded-lg border-theme bg-theme-card p-4"
       {...props}
     >
       {children}
@@ -133,7 +133,7 @@ export const MDXComponents = {
     [key: string]: any
   }) => (
     <h1
-      className="mb-6 mt-8 text-3xl font-bold text-white sm:text-4xl"
+      className="mb-6 mt-8 text-3xl font-bold text-theme-primary sm:text-4xl"
       {...props}
     >
       {children}
@@ -147,7 +147,7 @@ export const MDXComponents = {
     [key: string]: any
   }) => (
     <h2
-      className="mb-4 mt-8 text-2xl font-semibold text-white sm:text-3xl"
+      className="mb-4 mt-8 text-2xl font-semibold text-theme-primary sm:text-3xl"
       {...props}
     >
       {children}
@@ -161,14 +161,14 @@ export const MDXComponents = {
     [key: string]: any
   }) => (
     <h3
-      className="mb-3 mt-6 text-xl font-semibold text-white sm:text-2xl"
+      className="mb-3 mt-6 text-xl font-semibold text-theme-primary sm:text-2xl"
       {...props}
     >
       {children}
     </h3>
   ),
   p: ({ children, ...props }: { children?: ReactNode; [key: string]: any }) => (
-    <p className="mb-6 leading-relaxed text-dark-text" {...props}>
+    <p className="mb-6 leading-relaxed text-theme-secondary" {...props}>
       {children}
     </p>
   ),
@@ -180,7 +180,7 @@ export const MDXComponents = {
     [key: string]: any
   }) => (
     <ul
-      className="mb-6 list-inside list-disc space-y-2 text-dark-text"
+      className="mb-6 list-inside list-disc space-y-2 text-theme-secondary"
       {...props}
     >
       {children}
@@ -194,7 +194,7 @@ export const MDXComponents = {
     [key: string]: any
   }) => (
     <ol
-      className="mb-6 list-inside list-decimal space-y-2 text-dark-text"
+      className="mb-6 list-inside list-decimal space-y-2 text-theme-secondary"
       {...props}
     >
       {children}
